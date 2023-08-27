@@ -1,14 +1,9 @@
 # 実行ファイル名
-NAME	= so_long.a
-
+NAME	= so_long
 
 # コンパイル対象ファイル
 SRCS = \
-ft_printf.c\
-ft_puthex.c\
-ft_putptr.c\
-ft_putuint.c\
-
+so_long.c\
 
 # 生成したいオブジェクト
 OBJS	= $(SRCS:.c=.o)
@@ -19,19 +14,21 @@ CC		= cc
 # コンパイルオプション
 CFLAGS	= -Wall -Wextra -Werror
 
-INCLUDE = header
+LIB = \
+-L./minilibx-linux -lmlx \
+-L/usr/X11R6/lib -lX11 -lXext
+
+FW = -framework OpenGL -framework AppKit
 
 $(NAME): $(OBJS)
-	$(MAKE) -C ./libft
-	cp libft/libft.a $(NAME)
-	ar rcs $(NAME) $(OBJS)
+	$(CC) $(OBJS) $(LIB) $(FW) -o $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-	# $(CC) $(CFLAGS) -I${INCLUDE} -c $< -o $@
+	$(CC)  ${LIB} ${FW} -c $< -o $@
 
 .PHONY: all
 all: ${NAME}
+
 
 .PHONY: clean
 clean: 
