@@ -4,6 +4,8 @@ NAME	= so_long
 # コンパイル対象ファイル
 SRCS = \
 so_long.c\
+controler.c\
+debugger.c\
 
 # 生成したいオブジェクト
 OBJS	= $(SRCS:.c=.o)
