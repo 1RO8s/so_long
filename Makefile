@@ -1,7 +1,7 @@
 NAME :=so_long
 CC := cc
 CFLAGS = -Wall -Wextra -Werror
-CFLAGS = 
+DEBUG := -g -fsanitize=address
 OBJS	= $(SRCS:.c=.o)
 INCLUDE := headers
 
@@ -15,7 +15,7 @@ renderer.c\
 util.c\
 # debugger.c\
 
-DEBUG := -g -fsanitize=address
+
 
 LIB = \
 -L./minilibx-linux -lmlx \
@@ -33,15 +33,15 @@ $(NAME): $(OBJS)
 
 %.o: %.c
 	$(CC) ${CFLAGS} -c $< -o $@
-	# $(CC)  ${LIB} ${FW} -c $< -o $@
+# $(CC)  ${LIB} ${FW} -c $< -o $@
 
 .PHONY: all
-all: CFLAGS=-Wall -Wextra -Werror
-all: ${NAME}
+all:CFLAGS=-Wall -Wextra -Werror
+all:${NAME}
 
 .PHONY: debug
-debug: CFLAGS=$(DEBUG)
-debug: ${NAME}
+debug:CFLAGS=$(DEBUG)
+debug:${NAME}
 
 # 静的解析
 .PHONY: analyze
