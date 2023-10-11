@@ -6,7 +6,7 @@
 /*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 07:59:50 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/11 09:20:26 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/11 09:53:18 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,28 @@ typedef struct s_count
 # define UNREACHABLE_EXIT 206
 # define UNCOLLECTIBLE_ITEM 207
 
-void			move_player(t_game *game, int keycode);
+// so_long.c
 int				is_invalid_map(t_game *g);
+int	destroy_window(t_game *game);
+
+
+// renderer.c
 void			render_player(t_game *game);
 void			render_map(t_game *game);
+
+
+// controler.c
+int	press_keys(int kcd, t_game *game);
+void			move_player(t_game *game, int keycode);
+
+// element_count.c
+int	has_required_elements(t_game *g);
+
+// util.c
+t_position	*cps(int x, int y);
+int	destroy_window(t_game *game);
+void	print_errmsg(int errno);
+
 // libft
 int				ft_printf(const char *format, ...);
 char			*get_next_line(int fd);

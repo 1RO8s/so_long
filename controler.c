@@ -6,11 +6,27 @@
 /*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/11 09:26:42 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/11 09:48:25 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	press_keys(int kcd, t_game *game)
+{
+	if (kcd == KEY_ESC)
+		destroy_window(game);
+	if (game->completed)
+		return (0);
+	else if (
+		kcd == KEY_UP || kcd == KEY_DOWN || kcd == KEY_RIGHT || kcd == KEY_LEFT)
+	{
+		move_player(game, kcd);
+		render_map(game);
+		render_player(game);
+	}
+	return (0);
+}
 
 /**
 * Decrease item_count, and change the character at the current position to 0

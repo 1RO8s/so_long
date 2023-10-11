@@ -6,50 +6,11 @@
 /*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/11 09:28:37 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/11 09:53:53 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-int	destroy_window(t_game *game)
-{
-	mlx_destroy_window(game->mlx, game->window);
-	free(game->player);
-	free(game->exit);
-	if (game->images != NULL)
-	{
-		free(game->images->img_exit);
-		free(game->images->img_item);
-		free(game->images->img_player);
-		free(game->images->img_wall);
-		free(game->images->img_space[0]);
-	}
-	free(game->images);
-	free(game->map);
-	game->player = NULL;
-	game->exit = NULL;
-	game->images = NULL;
-	game->map = NULL;
-	free(game);
-	exit(0);
-}
-
-int	press_keys(int kcd, t_game *game)
-{
-	if (kcd == KEY_ESC)
-		destroy_window(game);
-	if (game->completed)
-		return (0);
-	else if (
-		kcd == KEY_UP || kcd == KEY_DOWN || kcd == KEY_RIGHT || kcd == KEY_LEFT)
-	{
-		move_player(game, kcd);
-		render_map(game);
-		render_player(game);
-	}
-	return (0);
-}
 
 char	*read_mapfile(char *file_name)
 {
@@ -107,24 +68,6 @@ void	game_setting(t_game *game)
 	read_images(game, &img_width, &img_height);
 	game->move_count = 0;
 	game->completed = FALSE;
-}
-
-void	print_errmsg(int errno)
-{
-	if (errno == NO_PLAYER_POSITION)
-		ft_printf("プレイヤーの初期位置を設定してください\n");
-	if (errno == NO_EXIT_POSITION)
-		ft_printf("出口を設定してください\n");
-	if (errno == NO_ITEMS)
-		ft_printf("アイテムを1つ以上設定してください\n");
-	if (errno == NOT_RECTANGLE)
-		ft_printf("長方形のマップを使用してください\n");
-	if (errno == NOT_WALLED)
-		ft_printf("壁に囲まれたマップを使用してください\n");
-	if (errno == UNREACHABLE_EXIT)
-		ft_printf("出口に到達出来ないマップです\n");
-	if (errno == UNCOLLECTIBLE_ITEM)
-		ft_printf("アイテムが回収できないマップです\n");
 }
 
 int	main(int argc, char *argv[])

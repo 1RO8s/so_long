@@ -9,9 +9,11 @@ INCLUDE := headers
 SRCS = \
 so_long.c\
 controler.c\
-debugger.c\
 validator.c\
+element_count.c\
 renderer.c\
+util.c\
+# debugger.c\
 
 DEBUG := -g -fsanitize=address
 
