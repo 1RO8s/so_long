@@ -24,6 +24,8 @@ LIB = \
 FW = -framework OpenGL -framework AppKit
 
 $(NAME): $(OBJS)
+	$(MAKE) -C ./minilibx-linux
+	$(MAKE) -C ./libft
 	$(CC) ${CFLAGS} $(OBJS) $(LIB) $(FW) -o $(NAME) ./libft/libft.a
 
 # $(NAME): $(OBJS)
