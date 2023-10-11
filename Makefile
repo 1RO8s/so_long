@@ -1,20 +1,19 @@
-# 実行ファイル名
-NAME	= so_long
+NAME :=so_long
+CC := cc
+CFLAGS = -Wall -Wextra -Werror
+CFLAGS = 
+OBJS	= $(SRCS:.c=.o)
+INCLUDE := headers
 
 # コンパイル対象ファイル
 SRCS = \
 so_long.c\
 controler.c\
 debugger.c\
+validator.c\
+renderer.c\
 
-# 生成したいオブジェクト
-OBJS	= $(SRCS:.c=.o)
-
-# コンパイラの指定
-CC		= cc
-
-# コンパイルオプション
-CFLAGS	= -Wall -Wextra -Werror
+DEBUG := -g -fsanitize=address
 
 LIB = \
 -L./minilibx-linux -lmlx \
@@ -23,14 +22,30 @@ LIB = \
 FW = -framework OpenGL -framework AppKit
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) $(LIB) $(FW) -o $(NAME)
+	$(CC) ${CFLAGS} $(OBJS) $(LIB) $(FW) -o $(NAME) ./libft/libft.a
+
+# $(NAME): $(OBJS)
+# 	$(MAKE) -C ./libft
+# 	cp libft/libft.a $(NAME)
+# 	ar rcs $(NAME) $(OBJS)
 
 %.o: %.c
-	$(CC)  ${LIB} ${FW} -c $< -o $@
+	$(CC) ${CFLAGS} -c $< -o $@
+	# $(CC)  ${LIB} ${FW} -c $< -o $@
 
 .PHONY: all
+all: CFLAGS=-Wall -Wextra -Werror
 all: ${NAME}
 
+.PHONY: debug
+debug: CFLAGS=$(DEBUG)
+debug: ${NAME}
+
+# 静的解析
+.PHONY: analyze
+analyze:
+	rm -f *.plist
+	cc --analyze ${SRCS}
 
 .PHONY: clean
 clean: 
