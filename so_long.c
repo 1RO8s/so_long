@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hnagasak <hnagasak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/11 09:53:53 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/14 21:13:45 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,52 @@ void	game_setting(t_game *game)
 	game->completed = FALSE;
 }
 
+int	free_game(t_game *game)
+{
+	ft_printf("--- free_game ---\n");
+	if (game->mlx != NULL)
+	mlx_destroy_window(game->mlx, game->window);
+	free(game->player);
+	free(game->exit);
+	ft_printf("#1 %p\n",game->images);
+	if (game->images != NULL)
+	{
+		ft_printf("#1-1\n");
+		free(game->images->img_exit);
+		free(game->images->img_item);
+		free(game->images->img_player);
+		free(game->images->img_wall);
+		free(game->images->img_space[0]);
+	}
+	ft_printf("#2 %p\n",game->images);
+	free(game->images);
+	free(game->map);
+	game->player = NULL;
+	game->exit = NULL;
+	game->images = NULL;
+	game->map = NULL;
+	free(game);
+	ft_printf("#end\n");
+	exit(0);
+}
+
+void init_game(t_game *game)
+{
+	game->mlx = NULL;
+	game->window = NULL;
+	game->width = 0;
+	game->height = 0;
+	game->images = NULL;
+	game->player = NULL;
+	game->exit = NULL;
+	game->map = NULL;
+	game->item_count = 0;
+	game->move_count = 0;
+	game->errno = 0;
+	game->completed = 0;
+}
+
+
 int	main(int argc, char *argv[])
 {
 	t_game	*game;
@@ -81,11 +127,19 @@ int	main(int argc, char *argv[])
 	if (map == NULL)
 		exit(EXIT_FAILURE);
 	game = malloc(sizeof(t_game));
+	init_game(game);
+	ft_printf("\\_\\_\\_\\_\\_\n");
+	ft_printf("height:%d\n",game->height);
+	ft_printf("errno:%d\n",game->errno);
+	ft_printf("width:%d\n",game->width);
 	game->map = map;
-	game->errno = 0;
+	// game->errno = 0;
+	printf("##1 %p\n",game->images);
 	if (is_invalid_map(game))
 	{
+		printf("##2 %p\n",game->images);
 		print_errmsg(game->errno);
+		free_game(game);
 		exit(EXIT_FAILURE);
 	}
 	game_setting(game);
