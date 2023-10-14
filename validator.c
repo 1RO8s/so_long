@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hnagasak <hnagasak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/11 09:54:57 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/14 19:50:46 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ int	dfs(t_game *g, char *_map, t_position *_p)
 }
 
 /**
- * Set player position and direction.
- * @param[in]  g  t_game to set exit 
+ * If all items are collectible, return 1; 
+ * @param[in]  g  t_game to set items 
  * @param[in]  _map map to be verified
  * @param[in]  _p potision to be verified
- * @param[in]  direction direction of player
+ * @param[in]  item_count number of collectible items
  */
 int	alitem(t_game *g, char *_map, t_position *_p, int item_count)
 {
