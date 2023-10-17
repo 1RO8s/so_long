@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnagasak <hnagasak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/14 19:50:46 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:06:16 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,26 @@
 int	is_rectangle(t_game *g)
 {
 	char	*c;
-	int		width;
-	int		temp_width;
+	int		tmp_width;
 
 	c = g->map;
-	width = 0;
-	temp_width = 0;
+	tmp_width = 0;
 	g->height = 1;
 	while (*c != '\0')
 	{
-		if (*c == '\n')
+		if (*c != '\n')
+			tmp_width++;
+		else
 		{
-			if (temp_width == 0)
-				temp_width = width;
-			else if (temp_width != width)
+			if (g->width == 0)
+				g->width = tmp_width;
+			else if (g->width != tmp_width)
 				return (FALSE);
-			width = 0;
+			tmp_width = 0;
 			g->height++;
 		}
-		else
-			width++;
 		c++;
 	}
-	g->width = width;
 	return (TRUE);
 }
 
@@ -97,7 +94,7 @@ int	dfs(t_game *g, char *_map, t_position *_p)
 }
 
 /**
- * If all items are collectible, return 1; 
+ * If all items are collectible, return (1); 
  * @param[in]  g  t_game to set items 
  * @param[in]  _map map to be verified
  * @param[in]  _p potision to be verified
