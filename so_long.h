@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hnagasak <hnagasak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 07:59:50 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/17 15:17:14 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:22:10 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,10 @@ int				destroy_window(t_game *game);
 // renderer.c
 // void			render_player(t_game *game);
 // void			render_map(t_game *game);
-int	render(t_game *game);
+int				render(t_game *game);
 
-	// controler.c
-	int press_keys(int kcd, t_game *game);
+// controler.c
+int				press_keys(int kcd, t_game *game);
 void			move_player(t_game *game, int keycode);
 
 // element_count.c
@@ -111,7 +111,7 @@ int				has_required_elements(t_game *g);
 t_position		*cps(int x, int y);
 int				destroy_window(t_game *game);
 void			print_errmsg(int errno);
-void	*read_img(t_game *g, char *file, int *width, int *height);
+void			*read_img(t_game *g, char *file, int *width, int *height);
 
 // libft
 int				ft_printf(const char *format, ...);
