@@ -6,7 +6,7 @@
 /*   By: hnagasak <hnagasak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 07:59:50 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/17 16:22:10 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:45:21 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int				has_required_elements(t_game *g);
 // util.c
 t_position		*cps(int x, int y);
 int				destroy_window(t_game *game);
-void			print_errmsg(int errno);
+void			print_errmsg(t_game *game);
 void			*read_img(t_game *g, char *file, int *width, int *height);
 
 // libft

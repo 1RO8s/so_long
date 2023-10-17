@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hnagasak <hnagasak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/17 15:16:54 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:45:39 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*read_mapfile(char *file_name)
 	map = NULL;
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
-		perror("ファイルを開けませんでした");
+		perror("Error\nファイルを開けませんでした");
 	line = "";
 	while (line != NULL)
 	{
@@ -87,7 +87,10 @@ int	main(int argc, char *argv[])
 	char	*map;
 
 	if (argc != 2)
+	{
+		ft_printf("Error\n引数が正しくありません\n");
 		return (0);
+	}
 	map = read_mapfile(argv[1]);
 	if (map == NULL)
 		exit(EXIT_FAILURE);
@@ -96,8 +99,7 @@ int	main(int argc, char *argv[])
 	game->map = map;
 	if (is_invalid_map(game))
 	{
-		print_errmsg(game->errno);
-		destroy_window(game);
+		print_errmsg(game);
 		exit(EXIT_FAILURE);
 	}
 	game_setting(game);
