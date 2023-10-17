@@ -6,7 +6,7 @@
 /*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/11 09:48:25 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:20:38 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	press_keys(int kcd, t_game *game)
 		kcd == KEY_UP || kcd == KEY_DOWN || kcd == KEY_RIGHT || kcd == KEY_LEFT)
 	{
 		move_player(game, kcd);
-		render_map(game);
-		render_player(game);
+		render(game);
 	}
 	return (0);
 }

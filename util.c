@@ -6,7 +6,7 @@
 /*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/11 09:52:22 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:18:11 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,15 @@ t_position	*cps(int x, int y)
 	return (pos);
 }
 
+void	*read_img(t_game *g, char *file, int *width, int *height)
+{
+	return (mlx_xpm_file_to_image(g->mlx, file, width, height));
+}
+
 int	destroy_window(t_game *game)
 {
-	mlx_destroy_window(game->mlx, game->window);
+	if (game->mlx != NULL)
+		mlx_destroy_window(game->mlx, game->window);
 	free(game->player);
 	free(game->exit);
 	if (game->images != NULL)

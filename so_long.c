@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnagasak <hnagasak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/14 21:13:45 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:16:54 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@ char	*read_mapfile(char *file_name)
 	return (map);
 }
 
-void	*read_img(t_game *g, char *file, int *width, int *height)
-{
-	return (mlx_xpm_file_to_image(g->mlx, file, width, height));
-}
-
 void	read_images(t_game *g, int *width, int *height)
 {
 	t_images	*images;
@@ -70,36 +65,7 @@ void	game_setting(t_game *game)
 	game->completed = FALSE;
 }
 
-int	free_game(t_game *game)
-{
-	ft_printf("--- free_game ---\n");
-	if (game->mlx != NULL)
-	mlx_destroy_window(game->mlx, game->window);
-	free(game->player);
-	free(game->exit);
-	ft_printf("#1 %p\n",game->images);
-	if (game->images != NULL)
-	{
-		ft_printf("#1-1\n");
-		free(game->images->img_exit);
-		free(game->images->img_item);
-		free(game->images->img_player);
-		free(game->images->img_wall);
-		free(game->images->img_space[0]);
-	}
-	ft_printf("#2 %p\n",game->images);
-	free(game->images);
-	free(game->map);
-	game->player = NULL;
-	game->exit = NULL;
-	game->images = NULL;
-	game->map = NULL;
-	free(game);
-	ft_printf("#end\n");
-	exit(0);
-}
-
-void init_game(t_game *game)
+void	init_game(t_game *game)
 {
 	game->mlx = NULL;
 	game->window = NULL;
@@ -115,7 +81,6 @@ void init_game(t_game *game)
 	game->completed = 0;
 }
 
-
 int	main(int argc, char *argv[])
 {
 	t_game	*game;
@@ -128,24 +93,17 @@ int	main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	game = malloc(sizeof(t_game));
 	init_game(game);
-	ft_printf("\\_\\_\\_\\_\\_\n");
-	ft_printf("height:%d\n",game->height);
-	ft_printf("errno:%d\n",game->errno);
-	ft_printf("width:%d\n",game->width);
 	game->map = map;
-	// game->errno = 0;
-	printf("##1 %p\n",game->images);
 	if (is_invalid_map(game))
 	{
-		printf("##2 %p\n",game->images);
 		print_errmsg(game->errno);
-		free_game(game);
+		destroy_window(game);
 		exit(EXIT_FAILURE);
 	}
 	game_setting(game);
-	render_map(game);
-	render_player(game);
+	render(game);
 	mlx_hook(game->window, 3, 1L << 1, press_keys, game);
 	mlx_hook(game->window, 17, 0, destroy_window, game);
+	mlx_hook(game->window, 19, 1L << 17, render, game);
 	mlx_loop(game->mlx);
 }

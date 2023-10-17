@@ -6,7 +6,7 @@
 /*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/11 09:27:08 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/17 15:18:32 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,11 @@ void	render_player(t_game *game)
 		game->images->img_player,
 		TILE_SIZE * game->player->x,
 		TILE_SIZE * game->player->y);
+}
+
+int	render(t_game *game)
+{
+	render_map(game);
+	render_player(game);
+	return (0);
 }
