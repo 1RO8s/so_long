@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnagasak <hnagasak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 07:59:50 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/17 16:45:21 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/17 18:40:58 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_count
 # define NOT_WALLED 205
 # define UNREACHABLE_EXIT 206
 # define UNCOLLECTIBLE_ITEM 207
+# define INVALID_ELEMENT 208
 
 // so_long.c
 int				is_invalid_map(t_game *g);
@@ -112,6 +113,7 @@ t_position		*cps(int x, int y);
 int				destroy_window(t_game *game);
 void			print_errmsg(t_game *game);
 void			*read_img(t_game *g, char *file, int *width, int *height);
+int				is_invalid_element(char c);
 
 // libft
 int				ft_printf(const char *format, ...);

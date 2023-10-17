@@ -6,7 +6,7 @@
 /*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/11 09:49:58 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/17 18:49:02 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,13 @@ void	count_required_element(t_game *g, t_count *count)
 			y++;
 			continue ;
 		}
-		if (g->map[(g->width + 1) * y + x] == 'C')
+		if (is_invalid_element(g->map[(g->width + 1) * y + x]))
+			g->errno = INVALID_ELEMENT;
+		else if (g->map[(g->width + 1) * y + x] == 'C')
 			count->item = set_item_count(g, ++count->item);
-		if (g->map[(g->width + 1) * y + x] == 'E')
+		else if (g->map[(g->width + 1) * y + x] == 'E')
 			count->exit += set_exit_position(g, x, y);
-		if (g->map[(g->width + 1) * y + x] == 'P')
+		else if (g->map[(g->width + 1) * y + x] == 'P')
 			count->player += set_player_position(g, x, y, KEY_DOWN);
 		x++;
 	}
@@ -88,6 +90,8 @@ int	has_required_elements(t_game *g)
 	t_count	count;
 
 	count_required_element(g, &count);
+	if (g->errno == INVALID_ELEMENT)
+		return (FALSE);
 	if (count.player != 1)
 		g->errno = NO_PLAYER_POSITION;
 	if (count.exit != 1)
