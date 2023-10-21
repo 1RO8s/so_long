@@ -6,7 +6,7 @@
 /*   By: hnagasak <hnagasak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/21 10:53:05 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/21 12:46:40 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	is_rectangle(t_game *g)
 
 	c = g->map;
 	tmp_width = 0;
-	while (*c != '\0')
+	while (*c != '\0' && g->errno == 0)
 	{
 		if (*c != '\n')
 			tmp_width++;
@@ -32,16 +32,16 @@ int	is_rectangle(t_game *g)
 			if (g->width == 0)
 				g->width = tmp_width;
 			else if (g->width != tmp_width)
-				return (FALSE);
+				g->errno = NOT_RECTANGLE;
 			tmp_width = 0;
 			g->height++;
 		}
 		c++;
 	}
-	if (g->width != tmp_width)
-		return (FALSE);
 	g->height++;
-	return (TRUE);
+	if (g->width != tmp_width)
+		g->errno = NOT_RECTANGLE;
+	return (g->errno == 0);
 }
 
 int	is_walled_in(t_game *g)
@@ -110,7 +110,7 @@ int	alitem(t_game *g, char *_map, t_position *_p, int *item_count)
 	char		*map;
 	t_position	*p;
 
-	map = ft_strdup(_map);
+	map = _map;
 	p = _p;
 	width = g->width;
 	if (map[(width + 1) * p->y + p->x] == 'C'
@@ -126,7 +126,6 @@ int	alitem(t_game *g, char *_map, t_position *_p, int *item_count)
 	{
 		return (1);
 	}
-	free(map);
 	map = NULL;
 	return (0);
 }
@@ -137,14 +136,13 @@ int	alitem(t_game *g, char *_map, t_position *_p, int *item_count)
  */
 int	is_invalid_map(t_game *g)
 {
-	int	item_count;
+	int		item_count;
+	char	*_map;
 
+	_map = ft_strdup(g->map);
 	item_count = 0;
 	if (!is_rectangle(g))
-	{
-		g->errno = NOT_RECTANGLE;
 		return (TRUE);
-	}
 	if (!is_walled_in(g))
 		return (TRUE);
 	if (!has_required_elements(g))
@@ -154,10 +152,11 @@ int	is_invalid_map(t_game *g)
 		g->errno = UNREACHABLE_EXIT;
 		return (TRUE);
 	}
-	if (!alitem(g, g->map, g->player, &item_count))
+	if (!alitem(g, _map, g->player, &item_count))
 	{
 		g->errno = UNCOLLECTIBLE_ITEM;
 		return (TRUE);
 	}
+	free(_map);
 	return (FALSE);
 }
