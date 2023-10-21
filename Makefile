@@ -12,6 +12,7 @@ controler.c\
 validator.c\
 element_count.c\
 renderer.c\
+arg_check.c\
 util.c\
 # debugger.c\
 

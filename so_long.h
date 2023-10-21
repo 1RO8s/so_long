@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hnagasak <hnagasak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 07:59:50 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/19 14:44:17 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/21 10:41:08 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,10 @@ void			move_player(t_game *game, int keycode);
 
 // element_count.c
 int				has_required_elements(t_game *g);
+
+//  arg_check.c
+char			*read_mapfile(char *file_name);
+int				arg_check(int argc, char *argv[]);
 
 // util.c
 t_position		*cps(int x, int y);

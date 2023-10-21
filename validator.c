@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validator.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hnagasak <hnagasak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/21 10:28:45 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/21 10:53:05 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	is_rectangle(t_game *g)
 	tmp_width = 0;
 	while (*c != '\0')
 	{
-		ft_printf("[%c]", *c);
 		if (*c != '\n')
 			tmp_width++;
 		else
@@ -63,10 +62,12 @@ int	is_walled_in(t_game *g)
 		if (x == 0 || x == g->width - 1 || y == 0 || y == g->height - 1)
 		{
 			if (g->map[(g->width + 1) * y + x] != '1')
-				return (FALSE);
+				g->errno = NOT_WALLED;
 		}
 		x++;
 	}
+	if (g->errno == NOT_WALLED)
+		return (FALSE);
 	return (TRUE);
 }
 
@@ -112,7 +113,6 @@ int	alitem(t_game *g, char *_map, t_position *_p, int *item_count)
 	map = ft_strdup(_map);
 	p = _p;
 	width = g->width;
-	// ft_printf("\n(%d,%d) item:%d\nmap:\n%s\n", p->x, p->y, *item_count, map);
 	if (map[(width + 1) * p->y + p->x] == 'C'
 		&& ++(*item_count) == g->item_count)
 		return (1);
@@ -146,10 +146,7 @@ int	is_invalid_map(t_game *g)
 		return (TRUE);
 	}
 	if (!is_walled_in(g))
-	{
-		g->errno = NOT_WALLED;
 		return (TRUE);
-	}
 	if (!has_required_elements(g))
 		return (TRUE);
 	if (!dfs(g, g->map, g->player))
