@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hnagasak <hnagasak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/17 16:45:39 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:02:33 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,18 +81,42 @@ void	init_game(t_game *game)
 	game->completed = 0;
 }
 
+/**
+ * Return 1 if wrong arguments are entered
+ * @param[in]  argc  number of arguments
+ * @param[in]  argv each argument's value
+ */
+int	arg_check(int argc, char *argv[])
+{
+	int		len;
+	char	*ext;
+	char	*filename;
+
+	if (argc != 2)
+	{
+		ft_printf("Error\n引数が正しくありません\n");
+		return (1);
+	}
+	filename = argv[1];
+	len = ft_strlen(filename);
+	ext = &filename[len - 4];
+	if (ft_strncmp(".ber", ext, 4))
+	{
+		ft_printf("Error\n.berファイルを指定してください\n");
+		return (1);
+	}
+	return (0);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_game	*game;
 	char	*map;
 
-	if (argc != 2)
-	{
-		ft_printf("Error\n引数が正しくありません\n");
+	if (arg_check(argc, argv))
 		return (0);
-	}
 	map = read_mapfile(argv[1]);
-	if (map == NULL)
+	if (map == NULL && ft_printf("Error\nファイルが空です\n"))
 		exit(EXIT_FAILURE);
 	game = malloc(sizeof(t_game));
 	init_game(game);

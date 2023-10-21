@@ -6,7 +6,7 @@
 /*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/17 19:06:16 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/21 10:28:45 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	is_rectangle(t_game *g)
 
 	c = g->map;
 	tmp_width = 0;
-	g->height = 1;
 	while (*c != '\0')
 	{
+		ft_printf("[%c]", *c);
 		if (*c != '\n')
 			tmp_width++;
 		else
@@ -39,6 +39,9 @@ int	is_rectangle(t_game *g)
 		}
 		c++;
 	}
+	if (g->width != tmp_width)
+		return (FALSE);
+	g->height++;
 	return (TRUE);
 }
 
@@ -100,7 +103,7 @@ int	dfs(t_game *g, char *_map, t_position *_p)
  * @param[in]  _p potision to be verified
  * @param[in]  item_count number of collectible items
  */
-int	alitem(t_game *g, char *_map, t_position *_p, int item_count)
+int	alitem(t_game *g, char *_map, t_position *_p, int *item_count)
 {
 	int			width;
 	char		*map;
@@ -109,7 +112,9 @@ int	alitem(t_game *g, char *_map, t_position *_p, int item_count)
 	map = ft_strdup(_map);
 	p = _p;
 	width = g->width;
-	if (map[(width + 1) * p->y + p->x] == 'C' && ++item_count == g->item_count)
+	// ft_printf("\n(%d,%d) item:%d\nmap:\n%s\n", p->x, p->y, *item_count, map);
+	if (map[(width + 1) * p->y + p->x] == 'C'
+		&& ++(*item_count) == g->item_count)
 		return (1);
 	if (map[(width + 1) * p->y + p->x] == '1')
 		return (0);
@@ -121,7 +126,6 @@ int	alitem(t_game *g, char *_map, t_position *_p, int item_count)
 	{
 		return (1);
 	}
-	map[(width + 1) * p->y + p->x] = '0';
 	free(map);
 	map = NULL;
 	return (0);
@@ -133,6 +137,9 @@ int	alitem(t_game *g, char *_map, t_position *_p, int item_count)
  */
 int	is_invalid_map(t_game *g)
 {
+	int	item_count;
+
+	item_count = 0;
 	if (!is_rectangle(g))
 	{
 		g->errno = NOT_RECTANGLE;
@@ -150,7 +157,7 @@ int	is_invalid_map(t_game *g)
 		g->errno = UNREACHABLE_EXIT;
 		return (TRUE);
 	}
-	if (!alitem(g, g->map, g->player, 0))
+	if (!alitem(g, g->map, g->player, &item_count))
 	{
 		g->errno = UNCOLLECTIBLE_ITEM;
 		return (TRUE);

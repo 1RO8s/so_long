@@ -6,7 +6,7 @@
 /*   By: hnagasak <hnagasak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 07:59:50 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/17 18:40:58 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:44:17 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ size_t			ft_strlen(const char *s);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strdup(const char *s1);
 void			*ft_memset(void *b, int c, size_t len);
+int				ft_strncmp(const char *s1, const char *s2, size_t n);
 
 // debugger.c
 void			show_stat(t_game *g, int num);
