@@ -6,7 +6,7 @@
 /*   By: hnagasak <hnagasak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 05:57:37 by hnagasak          #+#    #+#             */
-/*   Updated: 2023/10/21 10:39:13 by hnagasak         ###   ########.fr       */
+/*   Updated: 2023/10/21 13:30:23 by hnagasak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	*read_mapfile(char *file_name)
 	old_map = NULL;
 	map = NULL;
 	fd = open(file_name, O_RDONLY);
-	if (fd == -1)
-		perror("Error\nファイルを開けませんでした");
+	if (fd == -1 && ft_printf("Error\nファイルを開けませんでした\n"))
+		exit(EXIT_FAILURE);
 	line = "";
 	while (line != NULL)
 	{
